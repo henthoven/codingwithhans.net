@@ -1,74 +1,390 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=generator content="Hugo 0.110.0"><title>C# 8.0 features | Coding with Hans</title><meta name=twitter:card content="summary"><meta name=twitter:title content="C# 8.0 features"><meta name=twitter:description content="Met de komst van .NET Core 3.0 in september zet Microsoft een nieuwe stap voor het .NET platform. In mijn blog over de nieuwe features in ."><meta property="og:title" content="C# 8.0 features"><meta property="og:description" content="Met de komst van .NET Core 3.0 in september zet Microsoft een nieuwe stap voor het .NET platform. In mijn blog over de nieuwe features in ."><meta property="og:type" content="article"><meta property="og:url" content="https://henthoven.github.io/codingwithhans.net/blog/20190709-csharp8features/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2019-07-09T13:30:56+00:00"><meta property="article:modified_time" content="2019-07-09T13:30:56+00:00"><link href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css rel=stylesheet integrity=sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.0.13/css/all.css integrity=sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp crossorigin=anonymous><link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel=stylesheet><link rel=stylesheet href=https://henthoven.github.io/codingwithhans.net/css/medium.5aee7d3a94f3736fcd09e89a822a81da3f807a9fd76f93a89a11a5e448b26e42.css><link rel=stylesheet href=https://henthoven.github.io/codingwithhans.net/css/additional.d7ce26e054a52def87f9b29b7b8eacb2a6e55755720063de89a1a440f0aa22e5.css></head><body><nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down"><div class="container pr-0"><a class=navbar-brand href=https://henthoven.github.io/codingwithhans.net//><span style=font-family:Righteous>Coding with Hans</span><span class=site-extention>.NET</span><div class=page-sub-title>Everyting about software development using .NET and C#!</div></a><button class=navbar-toggler type=button data-toggle=collapse data-target=#navbarMediumish aria-controls=navbarSupportedContent aria-expanded=false aria-label="Toggle navigation">
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse" id=navbarMediumish><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=/codingwithhans.net/>Home</a></li><li class=nav-item><a class=nav-link href=/codingwithhans.net/blog>Blogs</a></li><li class=nav-item><a class=nav-link href=/codingwithhans.net/about>About</a></li></ul></div></div></nav><div class=site-content><div class=container><div class=mainheading><h1 class=sitetitle>Coding with Hans</h1><p class=lead>Everyting about software development using .NET and C#!</p></div><div class=main-content><div class=container><div class=row><div class="col-md-9 flex-first flex-md-unordered"><div class=mainheading><div class="row post-top-meta"><div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0 md-nopad-right"><img class=author-thumb src=/images/hans-thumb-small.jpg alt="Hans Enthoven"></div><div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left md-nopad-left"><a target=_blank class=link-dark>Hans Enthoven</a><br><span class=author-description>Hi, my name is Hans Enthoven. The author of this blog.<br><i class="far fa-star"></i>
-Jul 9, 2019
-<i class="far fa-clock clock"></i>
-7 min read</span></div></div><h1 class=posttitle>C# 8.0 features</h1></div><div class=article-post><p>Met de komst van .NET Core 3.0 in september zet Microsoft een nieuwe stap voor het .NET platform. In mijn blog over de nieuwe features in .NET Core 3.0 komen de meest belangrijke aan bod. Onderdeel van .NET Core 3.0 zijn Worker Services. In deze blog vertel ik hier meer over.</p><h3 id=c-80-features>C# 8.0 features</h3><p>Tegelijk met .NET Core 3.0 komt ook C# 8.0 uit. Deze nieuwe versie biedt een heel aantal nieuwe features. De belangrijkste nieuwe features zijn:</p><ul><li>Nullable reference types (dwingt betrouwbaardere code af)</li><li>Async streams (await foreach)</li><li>Ranges (eenvoudig selecties uit arrays halen)</li><li>Default implementations on interfaces (niet elke class hoeft alle methodes nog te implementeren)</li><li>Recursive patterns (eenvoudiger matchen bij gebruik van de ‘is’ operator)</li><li>Switch expressions (traditionele switch statemens eindelijk in een modern jasje)</li></ul><p>In deze blogpost loop ik langs deze features en geef ik bij elke feature een voorbeeld hoe dit gebruikt kan worden.</p><h4 id=platform-afhankelijkheden>PLATFORM AFHANKELIJKHEDEN</h4><p>Allereerst is het belangrijk om te weten dat een aantal van deze features leunen op nieuwe types die zijn toegevoegd aan het framework. Deze types zijn onderdeel van .NET Standard 2.1. Het .NET Core 3.0 implementeert dit maar bijvoorbeeld het .NET Framework 4.8 doet dit niet. Deze features kunnen daardoor ook niet in het .NET framework 4.8 komen.</p><h4 id=c-80-gebruiken-binnen-je-project>C# 8.0 GEBRUIKEN BINNEN JE PROJECT</h4><p>Om C# 8.0 features te kunnen gebruiken zal je dit eerst in je build settings moeten opgeven. Dit doe je in Visual Studio 2019 bij ‘project properties –> Build –> Advanced –> Language Settings: C# 8.0’:</p><p><img src=EnableC8-450x201.png alt=EnableC8></p><h4 id=nullable-reference-types>NULLABLE REFERENCE TYPES</h4><p>Wanneer je gebruik maakt van C# 8.0 dan mogen refernce geen null waarden bevatten. Indien dit wel het geval is zal de compiler een warning geven:<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>Person person = <span style=color:#66d9ef>new</span> Person();
-</span></span><span style=display:flex><span>person = <span style=color:#66d9ef>null</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>Console.WriteLine(<span style=color:#e6db74>$&#34;Hello {person.Name}!&#34;</span>);</span></span></code></pre></div></p><p><img src=NullableWarnings-450x49.png alt=NullableWarnings></p><p>Nu kan het natuurlijk zo zijn dat de null waarde bij een reference type wel degelijk een betekenis heeft binnen je applicatie. In dat geval wil je nog wel een null waarde kunnen toekennen. Dit kan door de ? operator te gebruiken zoals we dat al gewend zijn bij nullable value types:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>Person? person = <span style=color:#66d9ef>new</span> Person();
-</span></span><span style=display:flex><span>person = <span style=color:#66d9ef>null</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>Console.WriteLine(<span style=color:#e6db74>$&#34;Hello {person.Name}!&#34;</span>);</span></span></code></pre></div><p><img src=NullableWarnings2-450x29.png alt=NullableWarnings2></p><p>Je houdt in dit geval nog één warning over, deze geeft aan dat er op deze manier op runtime een nullreference kan optreden. Deze is eenvoudig op te lossen door op deze null waarde te controleren:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>Person? person = <span style=color:#66d9ef>new</span> Person();
-</span></span><span style=display:flex><span>person = <span style=color:#66d9ef>null</span>;
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> (person != <span style=color:#66d9ef>null</span>)
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>     Console.WriteLine(<span style=color:#e6db74>$&#34;Hello {person.Name}!&#34;</span>);
-</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>Door deze nieuwe feature in C# 8.0 gaat de compiler je nog meer dwingen om bewust na te denken of een reference type uberhaupt wel een null waarde mag bevatten. Doordat de compiler je hier nu op wijst zal je code robuuster worden.</p><p>Lees hier nog veel meer over op <a href=https://devblogs.microsoft.com/dotnet/try-out-nullable-reference-types>https://devblogs.microsoft.com/dotnet/try-out-nullable-reference-types</a></p><h4 id=async-streams>ASYNC STREAMS</h4><p>C# heeft tot nu toe ondersteuning voor methoden waarover geïtereerd kan worden (IEnumerable) en ondersteuning voor async methoden. Maar voor de combinatie van deze twee was tot nu toe geen ondersteuning. Met C# 8.0 is er een nieuw type toegevoegd aan het framework (en is onderdeel van .NET Standard 2.1):</p><p><em>IAsyncEnumerable</em></p><p>Mede hierdoor kan het await keyword nu gebruikt worden voor een foreach blok. Dit resulteert er in dat elke keer dat er naar het volgende item geïtereerd wordt dit asynchroon gebeurt. In code ziet dit er dan bijvoorbeeld als volgt uit:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>async</span> Task DoAsyncStreams()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>await</span> <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> number <span style=color:#66d9ef>in</span> FetchData())
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        Console.WriteLine(number);
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    Console.ReadLine();
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>static</span> <span style=color:#66d9ef>async</span> IAsyncEnumerable FetchData()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i = <span style=color:#ae81ff>1</span>; i &amp;lt;= <span style=color:#ae81ff>10</span>; i++)
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>await</span> Task.Delay(<span style=color:#ae81ff>1000</span>); <span style=color:#75715e>// Simulate waiting on a server...</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>yield</span> <span style=color:#66d9ef>return</span> i;
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>De bovenstaande code zorgt ervoor dat er elke seconde een volgende regel wordt afgedrukt. Veel meer uitleg hierover is te vinden op <a href=https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/async-streams>https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/async-streams</a></p><h4 id=ranges>RANGES</h4><p>Met deze feature wordt het eenvoudiger om stukken uit een array te selecteren. Om deze feature mogelijk te maken zijn er twee nieuwe types toegevoegd aan het framework:</p><ul><li>Range</li><li>Index</li></ul><p>Om deze types eenvoudig te gebruiken zijn er ook twee nieuwe operators toegevoegd (binnen een array indexer):</p><ul><li>Range operator x..y &ndash;> Hiermee kun je een van t/m range definiëren</li><li>Hat operator ^ &ndash;> Hiermee kun je het aantal elementen voor het einde van de lijsten specificeren</li></ul><p>Deze operators laten zich het beste uitleggen aan de hand van een aantal voorbeelden:</p><ul><li>numbers[..2] &ndash;> Selecteert alle elementen van het begin tot het 2e element</li><li>numbers[^2..] &ndash;> Selecteert alle elementen vanaf twee elementen voor het einde</li><li>numbers[1..^1] &ndash;> Selecteert alle elementen vanaf het 1e element t/m het voorlaatste element</li></ul><p>Zoals je ziet maakt dit het selecteren van een subset uit een array een stuk eenvoudiger. Veel meer hierover kun je lezen op <a href=https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/ranges>https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/ranges</a></p><h4 id=default-implementations-on-interfaces>DEFAULT IMPLEMENTATIONS ON INTERFACES</h4><p>We kennen allemaal de situatie wel dat je een bestaande interface wil uitbreiden maar dat dit impact heeft op een groot deel van je code. Dit omdat alle classes die deze interface implementeren dan ook de nieuwe methode moeten implementeren. C# 8.0 heeft hier de oplossing voor met default implementations. Het is nu namelijk mogelijk om bij een methode in een interface een code blok toe te voegen. Het gevolg is dat deze methode niet meer door alle classes geïmplementeerd hoeft te worden. Indien een class de methode niet specificeert zal de default implementatie aangeroepen worden. In feite maakt dit een vorm van multiple inheritance mogelijk.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>IDefaultInterfacesExample</span>
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> DoSomething(<span style=color:#66d9ef>string</span> input);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> DoSomethingDifferent(<span style=color:#66d9ef>string</span> input)
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        Console.WriteLine(<span style=color:#e6db74>&#34;Do something diffrent from default interface implementation&#34;</span>);
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>Persoonlijk ben ik geen heel grote fan van deze feature omdat het je code in mijn ogen minder zuiver maakt.</p><p>Zie ook <a href=https://devblogs.microsoft.com/dotnet/default-implementations-in-interfaces/>https://devblogs.microsoft.com/dotnet/default-implementations-in-interfaces/</a></p><h4 id=recursive-patterns>RECURSIVE PATTERNS</h4><p>Het hele pattern matching mechanisme dat we al langer kennen in C# is met C# 8.0 nog verder uitgebreid. Dit zorgt er o.a. voor dat we bij de ‘is’ operator meer kunnen doen in het matchen van properties en in het opvangen van waarden van properties. De volgende code geeft hier een voorbeeld van:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> DoPatternMatching()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> point = <span style=color:#66d9ef>new</span> Point(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// C# 7.0</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (point <span style=color:#66d9ef>is</span> Point p &amp;amp;&amp;amp; p.X == <span style=color:#ae81ff>2</span>)
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        Console.WriteLine(<span style=color:#e6db74>$&#34;C# 7.0 ==&amp;gt; Het betreft een point met X waarde 2 en y waarde {p.Y}&#34;</span>);
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#75715e>// C# 8.0</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (point <span style=color:#66d9ef>is</span> Point { X: <span style=color:#ae81ff>2</span>, Y: <span style=color:#66d9ef>int</span> yWaarde})
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        Console.WriteLine(<span style=color:#e6db74>$&#34;C# 8.0 ==&amp;gt;Het betreft een point met X waarde 2 en Y waarde {yWaarde}&#34;</span>);
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>Waar je in C# 7.0 nog een variabele ‘p’ moest declareren om iets met de properties te kunnen doen kan dit in C# 8.0 met een anoniem object. Indien je specifieke waarden over wil nemen om deze later te gebruiken dan kan dit door inline deze variabele te declareren (in dit geval bijvoorbeeld de variabele ‘yWaarde’).</p><p>Een krachtige feature die code nog overzichtelijker maakt.</p><h4 id=switch-expressions>SWITCH EXPRESSIONS</h4><p>Wat bij traditionele switch expressions vaak gebeurt is dat er binnen elke case een return statement staat. Dit oogt vaak wat omslachtig en (persoonlijke mening 😊) het voelt ook wat jaren 80 aan. In C# 8.0 zit nu de mogelijkheid om je switch statements die enkel iets returnen anders te schrijven. Je returned eigenlijk het switch statement en binnen elke case geef je aan wat er in dat geval geretourneerd moet worden.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>string</span> DoSwitchExpressions()
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> point = <span style=color:#66d9ef>new</span> Point(<span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>20</span>);
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> point <span style=color:#66d9ef>switch</span>
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        Point p when p.X == <span style=color:#ae81ff>10</span> =&amp;gt; <span style=color:#e6db74>&#34;X is inderdaad 10 :)&#34;</span>,
-</span></span><span style=display:flex><span>        Point p when p.X == <span style=color:#ae81ff>20</span> =&amp;gt; <span style=color:#e6db74>&#34;X is 20...&#34;</span>,
-</span></span><span style=display:flex><span>        _                      =&amp;gt; <span style=color:#e6db74>&#34;Onbekend&#34;</span>
-</span></span><span style=display:flex><span>    };
-</span></span><span style=display:flex><span>}</span></span></code></pre></div><p>Je ziet hier dat de case statements zijn vervangen door een lambda expression (=>) en de default is vervangen door een underscore (_). Het switch statement zelf staat nu tussen de te testen variabele en een code blok met alle cases.</p><p>Je kan hier meer over lezen op <a href=https://devblogs.microsoft.com/dotnet/do-more-with-patterns-in-c-8-0/>https://devblogs.microsoft.com/dotnet/do-more-with-patterns-in-c-8-0/</a></p><p>Dit zijn in mijn ogen de belangrijkste nieuwe features van C# 8.0. De gebruikte voorbeeld code kun je vinden op <a href=https://github.com/henthoven/CSharp8Features>https://github.com/henthoven/CSharp8Features</a></p></div><div class=after-post-tags><ul class=tags><li><a href=/tags/csharp>csharp</a></li><li><a href=/tags/dotnet>dotnet</a></li><li><a href=/tags/dotnetcore>dotnetcore</a></li></ul></div><div class=row><div class=col-md-12><div class="share sticky-top sticky-top-offset"><p>Share</p><ul><li class="ml-1 mr-1"><a target=_blank href="https://twitter.com/intent/tweet?text=C%23%208.0%20features&url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20190709-csharp8features%2f" onclick='return window.open(this.href,"twitter-share","width=550,height=435"),!1'><i class="fab fa-twitter"></i></a></li><li class="ml-1 mr-1"><a target=_blank href="https://facebook.com/sharer.php?u=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20190709-csharp8features%2f" onclick='return window.open(this.href,"facebook-share","width=550,height=435"),!1'><i class="fab fa-facebook-f"></i></a></li><li class="ml-1 mr-1"><a target=_blank href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20190709-csharp8features%2f" onclick='return window.open(this.href,"linkedin-share","width=550,height=435"),!1'><i class="fab fa-linkedin"></i></a></li></ul></div></div></div><div class="row PageNavigation d-flex justify-content-between font-weight-bold"><a class="d-block col-md-6" href=https://henthoven.github.io/codingwithhans.net/blog/20200525-csharep9myopinion/>&#171; My thoughts on C# 9.0</a><div class=clearfix></div></div></div></div></div></div></div><div class="jumbotron fortags"><div class="d-md-flex h-100"><div class="col-md-9 p-5 align-self-center text-center"><a class="mt-1 mb-1" href=/tags/blazor>blazor</a>
-<a class="mt-1 mb-1" href=/tags/csharp>csharp</a>
-<a class="mt-1 mb-1" href=/tags/dotnet>dotnet</a>
-<a class="mt-1 mb-1" href=/tags/dotnetcore>dotnetcore</a>
-<a class="mt-1 mb-1" href=/tags/gaming>gaming</a></div></div></div><footer class=footer><div class=container><div class=row><div class="col-md-12 col-sm-12 text-center text-lg-left">&copy; Copyright Hans Enthoven - All rights reserved</div><div class="col-md-6 col-sm-6 text-center text-lg-right"></div></div></div></footer></div><script src=https://code.jquery.com/jquery-3.4.1.min.js></script>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js integrity=sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut crossorigin=anonymous></script>
-<script src=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js integrity=sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM crossorigin=anonymous></script>
-<script src=https://henthoven.github.io/codingwithhans.net/js/mediumish.e4b90c58dfa15ac82caf2edfa01e5fd047e17bc15e6babe5c0e442a4407d0b25.js integrity="sha256-5LkMWN+hWsgsry7foB5f0Efhe8Fea6vlwORCpEB9CyU="></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-1XXXXXXX1-X","auto"),ga("send","pageview"))</script></body></html>
+<!DOCTYPE html>
+<html lang="en-us"><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="Hugo 0.110.0">
+	
+	<title>C# 8.0 features | Coding with Hans</title>
+	
+	
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="C# 8.0 features"/>
+<meta name="twitter:description" content="Met de komst van .NET Core 3.0 in september zet Microsoft een nieuwe stap voor het .NET platform. In mijn blog over de nieuwe features in ."/>
+
+	<meta property="og:title" content="C# 8.0 features" />
+<meta property="og:description" content="Met de komst van .NET Core 3.0 in september zet Microsoft een nieuwe stap voor het .NET platform. In mijn blog over de nieuwe features in ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://henthoven.github.io/codingwithhans.net/blog/20190709-csharp8features/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-07-09T13:30:56+00:00" />
+<meta property="article:modified_time" content="2019-07-09T13:30:56+00:00" />
+
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+
+	
+	<link rel="stylesheet" href="https://henthoven.github.io/codingwithhans.net/css/medium.5aee7d3a94f3736fcd09e89a822a81da3f807a9fd76f93a89a11a5e448b26e42.css"> 
+
+	
+	<link rel="stylesheet" href="https://henthoven.github.io/codingwithhans.net/css/additional.d7ce26e054a52def87f9b29b7b8eacb2a6e55755720063de89a1a440f0aa22e5.css"> 
+
+	
+	
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
+    <div class="container pr-0">
+        
+        <a class="navbar-brand" href="https://henthoven.github.io/codingwithhans.net//">
+
+            
+            <span style="font-family:Righteous;">Coding with Hans</span><span class="site-extention">.NET</span>
+            <div class="page-sub-title">Everyting about software development using .NET and C#!</div>
+            
+        </a>
+        
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbarMediumish">
+            
+            <ul class="navbar-nav ml-auto">
+                 
+                    
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/codingwithhans.net/">Home</a>
+                    </li>
+                    
+                 
+                    
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/codingwithhans.net/blog">Blogs</a>
+                    </li>
+                    
+                 
+                    
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/codingwithhans.net/about">About</a>
+                    </li>
+                    
+                
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+
+        <div class="site-content">   
+            <div class="container">
+<div class="mainheading">
+    <h1 class="sitetitle">Coding with Hans</h1>
+    <p class="lead">
+         Everyting about software development using .NET and C#!
+    </p>
+</div><div class="main-content">
+        
+        <div class="container">
+            <div class="row">
+                                
+                <div class="col-md-9 flex-first flex-md-unordered">
+                    <div class="mainheading">
+                        	
+                        
+                        
+                        
+                        <div class="row post-top-meta">
+                            <div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0 md-nopad-right">
+                                <img class="author-thumb" src="/images/hans-thumb-small.jpg" alt="Hans Enthoven">
+                            </div>
+                            <div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left md-nopad-left">
+                                <a target="_blank" class="link-dark">Hans Enthoven</a><br>
+                                <span class="author-description">
+                                    Hi, my name is Hans Enthoven. The author of this blog.<br>
+                                    <i class="far fa-star"></i>
+                                    Jul 9, 2019
+                                    <i class="far fa-clock clock"></i>
+                                    7 min read
+                                </span>					
+                            </div>
+                        </div>			
+                        	
+                        
+                                                
+                        
+                        <h1 class="posttitle">C# 8.0 features</h1> 
+                    </div>
+
+                    
+                    
+                    
+                    
+
+                    
+                    <div class="article-post">
+                        <p>Met de komst van .NET Core 3.0 in september zet Microsoft een nieuwe stap voor het .NET platform. In mijn blog over de nieuwe features in .NET Core 3.0 komen de meest belangrijke aan bod. Onderdeel van .NET Core 3.0 zijn Worker Services. In deze blog vertel ik hier meer over.</p>
+<h3 id="c-80-features">C# 8.0 features</h3>
+<p>Tegelijk met .NET Core 3.0 komt ook C# 8.0 uit. Deze nieuwe versie biedt een heel aantal nieuwe features. De belangrijkste nieuwe features zijn:</p>
+<ul>
+<li>Nullable reference types (dwingt betrouwbaardere code af)</li>
+<li>Async streams (await foreach)</li>
+<li>Ranges (eenvoudig selecties uit arrays halen)</li>
+<li>Default implementations on interfaces (niet elke class hoeft alle methodes nog te implementeren)</li>
+<li>Recursive patterns (eenvoudiger matchen bij gebruik van de ‘is’ operator)</li>
+<li>Switch expressions (traditionele switch statemens eindelijk in een modern jasje)</li>
+</ul>
+<p>In deze blogpost loop ik langs deze features en geef ik bij elke feature een voorbeeld hoe dit gebruikt kan worden.</p>
+<h4 id="platform-afhankelijkheden">PLATFORM AFHANKELIJKHEDEN</h4>
+<p>Allereerst is het belangrijk om te weten dat een aantal van deze features leunen op nieuwe types die zijn toegevoegd aan het framework. Deze types zijn onderdeel van .NET Standard 2.1. Het .NET Core 3.0 implementeert dit maar bijvoorbeeld het .NET Framework 4.8 doet dit niet. Deze features kunnen daardoor ook niet in het .NET framework 4.8 komen.</p>
+<h4 id="c-80-gebruiken-binnen-je-project">C# 8.0 GEBRUIKEN BINNEN JE PROJECT</h4>
+<p>Om C# 8.0 features te kunnen gebruiken zal je dit eerst in je build settings moeten opgeven. Dit doe je in Visual Studio 2019 bij ‘project properties –&gt; Build –&gt; Advanced –&gt; Language Settings: C# 8.0’:</p>
+<p><img src="EnableC8-450x201.png" alt="EnableC8"></p>
+<h4 id="nullable-reference-types">NULLABLE REFERENCE TYPES</h4>
+<p>Wanneer je gebruik maakt van C# 8.0 dan mogen refernce geen null waarden bevatten. Indien dit wel het geval is zal de compiler een warning geven:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Person person = <span style="color:#66d9ef">new</span> Person();
+</span></span><span style="display:flex;"><span>person = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">$&#34;Hello {person.Name}!&#34;</span>);</span></span></code></pre></div></p>
+<p><img src="NullableWarnings-450x49.png" alt="NullableWarnings"></p>
+<p>Nu kan het natuurlijk zo zijn dat de null waarde bij een reference type wel degelijk een betekenis heeft binnen je applicatie. In dat geval wil je nog wel een null waarde kunnen toekennen. Dit kan door de ? operator te gebruiken zoals we dat al gewend zijn bij nullable value types:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Person? person = <span style="color:#66d9ef">new</span> Person();
+</span></span><span style="display:flex;"><span>person = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Console.WriteLine(<span style="color:#e6db74">$&#34;Hello {person.Name}!&#34;</span>);</span></span></code></pre></div>
+<p><img src="NullableWarnings2-450x29.png" alt="NullableWarnings2"></p>
+<p>Je houdt in dit geval nog één warning over, deze geeft aan dat er op deze manier op runtime een nullreference kan optreden. Deze is eenvoudig op te lossen door op deze null waarde te controleren:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Person? person = <span style="color:#66d9ef">new</span> Person();
+</span></span><span style="display:flex;"><span>person = <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (person != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>     Console.WriteLine(<span style="color:#e6db74">$&#34;Hello {person.Name}!&#34;</span>);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Door deze nieuwe feature in C# 8.0 gaat de compiler je nog meer dwingen om bewust na te denken of een reference type uberhaupt wel een null waarde mag bevatten. Doordat de compiler je hier nu op wijst zal je code robuuster worden.</p>
+<p>Lees hier nog veel meer over op <a href="https://devblogs.microsoft.com/dotnet/try-out-nullable-reference-types">https://devblogs.microsoft.com/dotnet/try-out-nullable-reference-types</a></p>
+<h4 id="async-streams">ASYNC STREAMS</h4>
+<p>C# heeft tot nu toe ondersteuning voor methoden waarover geïtereerd kan worden (IEnumerable) en ondersteuning voor async methoden. Maar voor de combinatie van deze twee was tot nu toe geen ondersteuning. Met C# 8.0 is er een nieuw type toegevoegd aan het framework (en is onderdeel van .NET Standard 2.1):</p>
+<p><em>IAsyncEnumerable</em></p>
+<p>Mede hierdoor kan het await keyword nu gebruikt worden voor een foreach blok. Dit resulteert er in dat elke keer dat er naar het volgende item geïtereerd wordt dit asynchroon gebeurt. In code ziet dit er dan bijvoorbeeld als volgt uit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task DoAsyncStreams()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> number <span style="color:#66d9ef">in</span> FetchData())
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(number);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    Console.ReadLine();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> IAsyncEnumerable FetchData()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">1</span>; i &amp;lt;= <span style="color:#ae81ff">10</span>; i++)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">await</span> Task.Delay(<span style="color:#ae81ff">1000</span>); <span style="color:#75715e">// Simulate waiting on a server...</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">yield</span> <span style="color:#66d9ef">return</span> i;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>De bovenstaande code zorgt ervoor dat er elke seconde een volgende regel wordt afgedrukt. Veel meer uitleg hierover is te vinden op <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/async-streams">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/async-streams</a></p>
+<h4 id="ranges">RANGES</h4>
+<p>Met deze feature wordt het eenvoudiger om stukken uit een array te selecteren. Om deze feature mogelijk te maken zijn er twee nieuwe types toegevoegd aan het framework:</p>
+<ul>
+<li>Range</li>
+<li>Index</li>
+</ul>
+<p>Om deze types eenvoudig te gebruiken zijn er ook twee nieuwe operators toegevoegd (binnen een array indexer):</p>
+<ul>
+<li>Range operator x..y &ndash;&gt; Hiermee kun je een van t/m range definiëren</li>
+<li>Hat operator ^ &ndash;&gt; Hiermee kun je het aantal elementen voor het einde van de lijsten specificeren</li>
+</ul>
+<p>Deze operators laten zich het beste uitleggen aan de hand van een aantal voorbeelden:</p>
+<ul>
+<li>numbers[..2] &ndash;&gt; Selecteert alle elementen van het begin tot het 2e element</li>
+<li>numbers[^2..] &ndash;&gt; Selecteert alle elementen vanaf twee elementen voor het einde</li>
+<li>numbers[1..^1] &ndash;&gt; Selecteert alle elementen vanaf het 1e element t/m het voorlaatste element</li>
+</ul>
+<p>Zoals je ziet maakt dit het selecteren van een subset uit een array een stuk eenvoudiger. Veel meer hierover kun je lezen op <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/ranges">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-8.0/ranges</a></p>
+<h4 id="default-implementations-on-interfaces">DEFAULT IMPLEMENTATIONS ON INTERFACES</h4>
+<p>We kennen allemaal de situatie wel dat je een bestaande interface wil uitbreiden maar dat dit impact heeft op een groot deel van je code. Dit omdat alle classes die deze interface implementeren dan ook de nieuwe methode moeten implementeren. C# 8.0 heeft hier de oplossing voor met default implementations. Het is nu namelijk mogelijk om bij een methode in een interface een code blok toe te voegen. Het gevolg is dat deze methode niet meer door alle classes geïmplementeerd hoeft te worden. Indien een class de methode niet specificeert zal de default implementatie aangeroepen worden. In feite maakt dit een vorm van multiple inheritance mogelijk.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IDefaultInterfacesExample</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> DoSomething(<span style="color:#66d9ef">string</span> input);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> DoSomethingDifferent(<span style="color:#66d9ef">string</span> input)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Do something diffrent from default interface implementation&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Persoonlijk ben ik geen heel grote fan van deze feature omdat het je code in mijn ogen minder zuiver maakt.</p>
+<p>Zie ook <a href="https://devblogs.microsoft.com/dotnet/default-implementations-in-interfaces/">https://devblogs.microsoft.com/dotnet/default-implementations-in-interfaces/</a></p>
+<h4 id="recursive-patterns">RECURSIVE PATTERNS</h4>
+<p>Het hele pattern matching mechanisme dat we al langer kennen in C# is met C# 8.0 nog verder uitgebreid. Dit zorgt er o.a. voor dat we bij de ‘is’ operator meer kunnen doen in het matchen van properties en in het opvangen van waarden van properties. De volgende code geeft hier een voorbeeld van:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> DoPatternMatching()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> point = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// C# 7.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (point <span style="color:#66d9ef">is</span> Point p &amp;amp;&amp;amp; p.X == <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;C# 7.0 ==&amp;gt; Het betreft een point met X waarde 2 en y waarde {p.Y}&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// C# 8.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (point <span style="color:#66d9ef">is</span> Point { X: <span style="color:#ae81ff">2</span>, Y: <span style="color:#66d9ef">int</span> yWaarde})
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;C# 8.0 ==&amp;gt;Het betreft een point met X waarde 2 en Y waarde {yWaarde}&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Waar je in C# 7.0 nog een variabele ‘p’ moest declareren om iets met de properties te kunnen doen kan dit in C# 8.0 met een anoniem object. Indien je specifieke waarden over wil nemen om deze later te gebruiken dan kan dit door inline deze variabele te declareren (in dit geval bijvoorbeeld de variabele ‘yWaarde’).</p>
+<p>Een krachtige feature die code nog overzichtelijker maakt.</p>
+<h4 id="switch-expressions">SWITCH EXPRESSIONS</h4>
+<p>Wat bij traditionele switch expressions vaak gebeurt is dat er binnen elke case een return statement staat. Dit oogt vaak wat omslachtig en (persoonlijke mening 😊) het voelt ook wat jaren 80 aan. In C# 8.0 zit nu de mogelijkheid om je switch statements die enkel iets returnen anders te schrijven. Je returned eigenlijk het switch statement en binnen elke case geef je aan wat er in dat geval geretourneerd moet worden.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">string</span> DoSwitchExpressions()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> point = <span style="color:#66d9ef">new</span> Point(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> point <span style="color:#66d9ef">switch</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Point p when p.X == <span style="color:#ae81ff">10</span> =&amp;gt; <span style="color:#e6db74">&#34;X is inderdaad 10 :)&#34;</span>,
+</span></span><span style="display:flex;"><span>        Point p when p.X == <span style="color:#ae81ff">20</span> =&amp;gt; <span style="color:#e6db74">&#34;X is 20...&#34;</span>,
+</span></span><span style="display:flex;"><span>        _                      =&amp;gt; <span style="color:#e6db74">&#34;Onbekend&#34;</span>
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Je ziet hier dat de case statements zijn vervangen door een lambda expression (=&gt;) en de default is vervangen door een underscore (_). Het switch statement zelf staat nu tussen de te testen variabele en een code blok met alle cases.</p>
+<p>Je kan hier meer over lezen op <a href="https://devblogs.microsoft.com/dotnet/do-more-with-patterns-in-c-8-0/">https://devblogs.microsoft.com/dotnet/do-more-with-patterns-in-c-8-0/</a></p>
+<p>Dit zijn in mijn ogen de belangrijkste nieuwe features van C# 8.0. De gebruikte voorbeeld code kun je vinden op <a href="https://github.com/henthoven/CSharp8Features">https://github.com/henthoven/CSharp8Features</a></p>
+
+                    </div>
+                    
+                    
+                    <div class="after-post-tags">
+                        <ul class="tags">
+                        
+                        <li>
+                        <a href="/tags/csharp">csharp</a>
+                        </li>
+                        
+                        <li>
+                        <a href="/tags/dotnet">dotnet</a>
+                        </li>
+                        
+                        <li>
+                        <a href="/tags/dotnetcore">dotnetcore</a>
+                        </li>
+                        
+                        </ul>
+                    </div>
+                    
+                    
+                    <div class="row">
+                        
+                        <div class="col-md-12"><div class="share sticky-top sticky-top-offset">
+    <p>Share</p>
+    <ul>
+        <li class="ml-1 mr-1">
+        <a target="_blank" href="https://twitter.com/intent/tweet?text=C%23%208.0%20features&url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20190709-csharp8features%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=435');return false;">
+        <i class="fab fa-twitter"></i>
+        </a>
+        </li>
+        
+        <li class="ml-1 mr-1">
+        <a target="_blank" href="https://facebook.com/sharer.php?u=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20190709-csharp8features%2f" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+        </li>
+
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20190709-csharp8features%2f" onclick="window.open(this.href, 'linkedin-share', 'width=550,height=435');return false;">
+            <i class="fab fa-linkedin"></i>
+            </a>
+        </li>
+        
+
+    </ul>
+
+    
+</div>
+</div>  
+                    </div>
+
+                    
+                    <div class="row PageNavigation d-flex justify-content-between font-weight-bold">
+                    
+                        <a class="d-block col-md-6" href="https://henthoven.github.io/codingwithhans.net/blog/20200525-csharep9myopinion/"> &laquo; My thoughts on C# 9.0</a>
+                    
+                    
+                    <div class="clearfix"></div>
+                    </div>
+                    
+                </div>
+                              
+            </div>           
+        </div>
+        
+        
+    </div>
+
+
+            </div>
+<div class="jumbotron fortags">
+	<div class="d-md-flex h-100">
+		
+		<div class="col-md-9 p-5 align-self-center text-center">
+			
+			<a class="mt-1 mb-1" href="/tags/blazor">blazor</a>
+			
+			<a class="mt-1 mb-1" href="/tags/csharp">csharp</a>
+			
+			<a class="mt-1 mb-1" href="/tags/dotnet">dotnet</a>
+			
+			<a class="mt-1 mb-1" href="/tags/dotnetcore">dotnetcore</a>
+			
+			<a class="mt-1 mb-1" href="/tags/gaming">gaming</a>
+			
+		</div>
+	</div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 text-center text-lg-left">
+                &copy; Copyright Hans Enthoven - All rights reserved
+            </div>
+            <div class="col-md-6 col-sm-6 text-center text-lg-right">    
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+        </div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<script src="https://henthoven.github.io/codingwithhans.net/js/mediumish.e4b90c58dfa15ac82caf2edfa01e5fd047e17bc15e6babe5c0e442a4407d0b25.js" integrity="sha256-5LkMWN&#43;hWsgsry7foB5f0Efhe8Fea6vlwORCpEB9CyU="></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-1XXXXXXX1-X', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    </body>
+</html>
