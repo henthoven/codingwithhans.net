@@ -1,385 +1,111 @@
-<!DOCTYPE html>
-<html lang="en-us"><head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="generator" content="Hugo 0.110.0">
-	
-	<title>C# 11 - Static Abstract Members | Coding with Hans</title>
-	
-	
-
-	<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/cover.png"/>
-<meta name="twitter:title" content="C# 11 - Static Abstract Members"/>
-<meta name="twitter:description" content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language, and adds some nice features for developers."/>
-
-	<meta property="og:title" content="C# 11 - Static Abstract Members" />
-<meta property="og:description" content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language, and adds some nice features for developers." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/" /><meta property="og:image" content="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/cover.png"/><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2022-09-13T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-09-13T00:00:00+00:00" />
-
-
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
-
-	
-	<link rel="stylesheet" href="https://henthoven.github.io/codingwithhans.net/css/medium.5aee7d3a94f3736fcd09e89a822a81da3f807a9fd76f93a89a11a5e448b26e42.css" integrity="sha256-Wu59OpTzc2/NCeiagiqB2j&#43;Aep/Xb5OomhGl5EiybkI=">
-
-	
-	<link rel="stylesheet" href="https://henthoven.github.io/codingwithhans.net/css/additional.d7ce26e054a52def87f9b29b7b8eacb2a6e55755720063de89a1a440f0aa22e5.css" integrity="sha256-184m4FSlLe&#43;H&#43;bKbe46ssqblV1VyAGPeiaGkQPCqIuU=">
-
-	
-	
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
-    <div class="container pr-0">
-        
-        <a class="navbar-brand" href="https://henthoven.github.io/codingwithhans.net//">
-
-            
-            <span style="font-family:Righteous;">Coding with Hans</span><span class="site-extention">.NET</span>
-            <div class="page-sub-title">Everyting about software development using .NET and C#!</div>
-            
-        </a>
-        
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        
-        <div class="collapse navbar-collapse" id="navbarMediumish">
-            
-            <ul class="navbar-nav ml-auto">
-                 
-                    
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/codingwithhans.net/">Home</a>
-                    </li>
-                    
-                 
-                    
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/codingwithhans.net/blog">Blogs</a>
-                    </li>
-                    
-                 
-                    
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/codingwithhans.net/about">About</a>
-                    </li>
-                    
-                
-            </ul>
-        </div>
-        
-    </div>
-</nav>
-
-
-        <div class="site-content">   
-            <div class="container">
-<div class="mainheading">
-    <h1 class="sitetitle">Coding with Hans</h1>
-    <p class="lead">
-         Everyting about software development using .NET and C#!
-    </p>
-</div><div class="main-content">
-        
-        <div class="container">
-            <div class="row">
-                                
-                <div class="col-md-9 flex-first flex-md-unordered">
-                    <div class="mainheading">
-                        	
-                        
-                        
-                        
-                        <div class="row post-top-meta">
-                            <div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0 md-nopad-right">
-                                <img class="author-thumb" src="/images/hans-thumb-small.jpg" alt="Hans Enthoven">
-                            </div>
-                            <div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left md-nopad-left">
-                                <a target="_blank" class="link-dark">Hans Enthoven</a><br>
-                                <span class="author-description">
-                                    Hi, my name is Hans Enthoven. The author of this blog.<br>
-                                    <i class="far fa-star"></i>
-                                    Sep 13, 2022
-                                    <i class="far fa-clock clock"></i>
-                                    8 min read
-                                </span>					
-                            </div>
-                        </div>			
-                        	
-                        
-                                                
-                        
-                        <h1 class="posttitle">C# 11 - Static Abstract Members</h1> 
-                    </div>
-
-                    
-                    
-                    
-                        <img class="featured-image img-fluid" src="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/cover.png" alt="thumbnail for this post">
-                    
-                    
-
-                    
-                    <div class="article-post">
-                        <p>With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language, and adds some nice features for developers. In this article, I will explore one feature in specific: <strong>Static Abstract Members</strong>. I personally feel this is a welcome addition to the language so let’s explain exactly what it is, and why I like it!</p>
-<h2 id="why-add-static-abstract-members">Why add <em>static abstract members</em>?</h2>
-<p>When you have an interface declared on a class it tells you that every instance of that class has the members that are declared in the interface. In that way the compiler knows what members you can use on any of the instances of the given type. Besides the members of the object you can also define static members on a class. Those are the members that will be available on the type and not on the instance of the class. Until now an interface implementation did not have anything to do with those static members. This changes with <em>static abstract members</em>. With this feature it will be possible to define that the type of a class that implements the interface must have certain static members. This can be very useful in the case of operators (operators in C# must be declared static). This is also the main driver for this feature. In .NET 7 <em>Generic Math</em> will be introduced and this is heavily dependent on <em>static abstract members</em>. Let&rsquo;s take a look at an example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> AddNumbers(IEnumerable&lt;<span style="color:#66d9ef">int</span>&gt; numbersToAdd)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> result = <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span>(<span style="color:#66d9ef">var</span> number <span style="color:#66d9ef">in</span> numbersToAdd)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        result += number;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>AddNumbers(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[] { <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">13</span> });
-</span></span></code></pre></div><p>In the example above you see a method that accepts a list of integers. All the integers in the list will be added and the result will be returned. Now imagine that you also want this method to work with other numeric types like doubles, floats and longs. My first thought would be to make the method generic:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span>T AddNumbersGeneric&lt;T&gt;(IEnumerable&lt;T&gt; numbersToAdd) 
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    T result = <span style="color:#66d9ef">default</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> number <span style="color:#66d9ef">in</span> numbersToAdd)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        result += number;  <span style="color:#75715e">// compiler error CS0019: Operator &#39;+=&#39; cannot be applied to operands of type &#39;T&#39; and &#39;T&#39;</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>Console.WriteLine(AddNumbersGeneric(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">long</span>[] { <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">13</span> }));
-</span></span></code></pre></div><p>Now the parameter is generic and I initialized the result variable to the default of it&rsquo;s type. The example above however won&rsquo;t compile because the compiler doesn&rsquo;t know if the type T has a + operator implemented. This is now the only thing blocking the generic implementation. So if you want to realize this in the current C# version you have to make an own implementation of AddNumbers for every numeric type. This would add a lot of the same code with only the type being different each time. <em>Generic Math</em> in .NET 7 solves this by relying on <em>static abstract members</em>.</p>
-<h2 id="generic-math-in-net-7-and-the-use-of-static-abstract-members">Generic math in .NET 7 and the use of <em>static abstract members</em></h2>
-<p>In .NET 7 a new interface INumber<T> is added. Let&rsquo;s look at the interface definition:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">INumber</span>&lt;TSelf&gt; : IComparable, IComparable&lt;TSelf&gt;, 
-</span></span><span style="display:flex;"><span> IEquatable&lt;TSelf&gt;, IFormattable, IParsable&lt;TSelf&gt;, ISpanFormattable, 
-</span></span><span style="display:flex;"><span> ISpanParsable&lt;TSelf&gt;, IAdditionOperators&lt;TSelf, TSelf, TSelf&gt;, 
-</span></span><span style="display:flex;"><span> IAdditiveIdentity&lt;TSelf, TSelf&gt;, IComparisonOperators&lt;TSelf, TSelf&gt;, 
-</span></span><span style="display:flex;"><span> IEqualityOperators&lt;TSelf, TSelf&gt;, IDecrementOperators&lt;TSelf&gt;, 
-</span></span><span style="display:flex;"><span> IDivisionOperators&lt;TSelf, TSelf, TSelf&gt;, IIncrementOperators&lt;TSelf&gt;, 
-</span></span><span style="display:flex;"><span> IModulusOperators&lt;TSelf, TSelf, TSelf&gt;, IMultiplicativeIdentity&lt;TSelf, TSelf&gt;,
-</span></span><span style="display:flex;"><span> IMultiplyOperators&lt;TSelf, TSelf, TSelf&gt;, INumberBase&lt;TSelf&gt;,
-</span></span><span style="display:flex;"><span> ISubtractionOperators&lt;TSelf, TSelf, TSelf&gt;, 
-</span></span><span style="display:flex;"><span> IUnaryNegationOperators&lt;TSelf, TSelf&gt;, IUnaryPlusOperators&lt;TSelf, TSelf&gt; <span style="color:#66d9ef">where</span> TSelf : INumber&lt;TSelf&gt;
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf Abs(TSelf <span style="color:#66d9ef">value</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf Clamp(TSelf <span style="color:#66d9ef">value</span>, TSelf min, TSelf max);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf CopySign(TSelf <span style="color:#66d9ef">value</span>, TSelf sign);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf CreateChecked&lt;TOther&gt;(TOther <span style="color:#66d9ef">value</span>) <span style="color:#66d9ef">where</span> TOther : INumber&lt;TOther&gt;;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf CreateSaturating&lt;TOther&gt;(TOther <span style="color:#66d9ef">value</span>) <span style="color:#66d9ef">where</span> TOther : INumber&lt;TOther&gt;;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf CreateTruncating&lt;TOther&gt;(TOther <span style="color:#66d9ef">value</span>) <span style="color:#66d9ef">where</span> TOther : INumber&lt;TOther&gt;;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">bool</span> IsNegative(TSelf <span style="color:#66d9ef">value</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf Max(TSelf x, TSelf y);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf MaxMagnitude(TSelf x, TSelf y);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf Min(TSelf x, TSelf y);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf MinMagnitude(TSelf x, TSelf y);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf Parse(ReadOnlySpan&lt;<span style="color:#66d9ef">char</span>&gt; s, NumberStyles style, IFormatProvider? provider);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf Parse(<span style="color:#66d9ef">string</span> s, NumberStyles style, IFormatProvider? provider);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">int</span> Sign(TSelf <span style="color:#66d9ef">value</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">bool</span> TryCreate&lt;TOther&gt;(TOther <span style="color:#66d9ef">value</span>, <span style="color:#66d9ef">out</span> TSelf result) <span style="color:#66d9ef">where</span> TOther : INumber&lt;TOther&gt;;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">bool</span> TryParse(ReadOnlySpan&lt;<span style="color:#66d9ef">char</span>&gt; s, NumberStyles style, IFormatProvider? provider, <span style="color:#66d9ef">out</span> TSelf result);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">bool</span> TryParse([NotNullWhen(<span style="color:#66d9ef">true</span>)] <span style="color:#66d9ef">string?</span> s, NumberStyles style, IFormatProvider? provider, <span style="color:#66d9ef">out</span> TSelf result);
-</span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>As you can see it has a lot of <em>static abstract members</em> that all the numeric types in .NET implement. Next to that it also inherits from a lot of other new interfaces that all declare <em>static abstract members</em> that are implemented by the different numeric .NET types. Take the <em>IUnaryPlusOperators&lt;TSelf, TSelf&gt;</em> interface for example. This interface adds the + operator. It is declared on a separate interface so that you can also reuse that for other types that implement a + operator. The <em>IUnaryPlusOperators&lt;TSelf, TSelf&gt;</em> looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IUnaryPlusOperators</span>&lt;TSelf, TResult&gt; <span style="color:#66d9ef">where</span> TSelf : IUnaryPlusOperators&lt;TSelf, TResult&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TResult <span style="color:#66d9ef">operator</span> +(TSelf <span style="color:#66d9ef">value</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>With all those interfaces added a new and straightforward implementation of our <em>AddNumbers</em> method becomes available:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span>T AddNumbers&lt;T&gt;(IEnumerable&lt;T&gt; numbersToAdd) <span style="color:#66d9ef">where</span> T: INumber&lt;T&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    T result = <span style="color:#66d9ef">default</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> number <span style="color:#66d9ef">in</span> numbersToAdd)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        result += number;  <span style="color:#75715e">// this now compiles because T implements INumber&lt;T&gt;</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>Console.WriteLine(AddNumbers(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">long</span>[] { <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">13</span> }));
-</span></span><span style="display:flex;"><span>Console.WriteLine(AddNumbers(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">double</span>[] { <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">3.0</span>, <span style="color:#ae81ff">13.12</span> }));
-</span></span><span style="display:flex;"><span>Console.WriteLine(AddNumbers(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">short</span>[] { <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span> }));
-</span></span></code></pre></div><p>All the method calls to the <em>AddNumbers</em> method will work now. Next to the <em>INumber<T></em> interface a lot of other interfaces using this are added. Another example is <em>IParsable<T></em>. This interface defines 2 methods that a type must have:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IParsable</span>&lt;TSelf&gt; <span style="color:#66d9ef">where</span> TSelf : IParsable&lt;TSelf&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> TSelf Parse(<span style="color:#66d9ef">string</span> s, IFormatProvider? provider);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">abstract</span> <span style="color:#66d9ef">bool</span> TryParse([NotNullWhen(<span style="color:#66d9ef">true</span>)] <span style="color:#66d9ef">string?</span> s, IFormatProvider? provider, <span style="color:#66d9ef">out</span> TSelf result);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Using the <em>IParsable<T></em> interface makes it possible to have 2 different types handled in the same way as long as they implement the static methods <em>Parse</em> and <em>TryParse</em>.</p>
-<p>The same also works for properties. For example in .NET all numeric types have static properties <em>One</em> an <em>Zero</em>. Those properties can be accessed and used on the type like any normal static member. For example I could change the previous example. In that example we initialized the result to the default of the given type. In the next example the result will be initialized with the <em>Zero</em> property of the generic (<em>INumber&lt;T&gt;</em>)type.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span>T AddNumbers&lt;T&gt;(IEnumerable&lt;T&gt; numbersToAdd) <span style="color:#66d9ef">where</span> T: INumber&lt;T&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    T result = T.Zero; <span style="color:#75715e">// initialized with the Zero value of the generic type</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> number <span style="color:#66d9ef">in</span> numbersToAdd)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        result += number; 
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Just one more example. Next to the <em>INumber&lt;TSelf&gt;</em> there is also an interface <em>IMinMaxValue&lt;T&gt;</em>. This interface exposes the static members MinValue and MaxValue that almost all numeric types have. It is in a separate interface because not all numeric types implement this (BigInteger for example does not implement this). The following example shows how the MaxValue of different types is written to the console using one generic method.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> ShowMaxValue&lt;T&gt;() <span style="color:#66d9ef">where</span> T: IMinMaxValue&lt;T&gt;
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    Console.WriteLine(T.MaxValue);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>ShowMaxValue&lt;<span style="color:#66d9ef">int</span>&gt;();
-</span></span><span style="display:flex;"><span>ShowMaxValue&lt;<span style="color:#66d9ef">long</span>&gt;();
-</span></span><span style="display:flex;"><span>ShowMaxValue&lt;<span style="color:#66d9ef">decimal</span>&gt;();
-</span></span><span style="display:flex;"><span>ShowMaxValue&lt;<span style="color:#66d9ef">float</span>&gt;();
-</span></span></code></pre></div><h2 id="why-not-just-static-members">Why not just static members?</h2>
-<p>You could ask why is it needed to make a member <em>static</em> <strong>and</strong> <em>abstract</em>? My first thought was that <em>static</em> would be enough since you want to tell that the member should not be on the object instance of the class but be a static member on the type. The fact that it is not implemented this way is because in <strong>C# 8.0</strong> another feature <em>Static interface members</em> was added to the language. This feature makes it possible to add method static implementations to your interface (not the best addition to the language in my opinion). You can for example define the following interface:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ICSharp8Example</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> DoSomething();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> DoAnotherThing()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Hello from a static method on an interface.&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>ICSharp8Example.DoAnotherThing();
-</span></span></code></pre></div><p>With this feature static members where already taken on interfaces. That is why this feature uses <em>static abstract</em> to indicate that the member should be implemented on the type.</p>
-<h2 id="how-can-it-be-useful-in-your-own-code--types">How can it be useful in your own code / types?</h2>
-<p>Generic Math is in my opinion a very good use case where <em>static abstract members</em> can be used. This is mainly because operators in C# are always static and because all numeric types share the fact that they have things like a Zero, a One and stuff like calculating an average. Those things are static for a reason. They could have been added as instance properties / methods but that would be a waste of memory resources since stuff like Zero and One are the same for all instances. So this is a perfect example where it is handy that an interface defines that a type should have certain members where the compiler can rely on.</p>
-<p>Having said that I don&rsquo;t have a good example for my own code where I would use this feature now. But when you have a scenario with static members shared across types and you need to handle them in the same way this is a way to make your code cleaner (just like Microsoft did with <em>generic math</em>). If you have a good scenario for this let me know in the comments.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>Looking at the <em>generic math</em> implementation using <em>static abstract members</em> I think it has already proven to be a very useful language feature. The addition of interfaces like <em>INumber&lt;T&gt;</em> (but also stuff like IParsable<T>) are very useful and makes your code cleaner. Next to that you can also benefit from it in your own code when you have a scenario with static members on different types that have the same functional meaning.</p>
-<h4 id="references">References</h4>
-<ul>
-<li><a href="https://devblogs.microsoft.com/dotnet/dotnet-7-generic-math/">.NET blog about generic math</a></li>
-<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/static-abstract-interface-methods">Official Microsoft documentation</a></li>
-</ul>
-
-                    </div>
-                    
-                    
-                    <div class="after-post-tags">
-                        <ul class="tags">
-                        
-                        <li>
-                        <a href="/tags/csharp">csharp</a>
-                        </li>
-                        
-                        <li>
-                        <a href="/tags/dotnet">dotnet</a>
-                        </li>
-                        
-                        </ul>
-                    </div>
-                    
-                    
-                    <div class="row">
-                        
-                        <div class="col-md-12"><div class="share sticky-top sticky-top-offset">
-    <p>Share</p>
-    <ul>
-        <li class="ml-1 mr-1">
-        <a target="_blank" href="https://twitter.com/intent/tweet?text=C%23%2011%20-%20Static%20Abstract%20Members&url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220913-csharp-11-static-abstract-members%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=435');return false;">
-        <i class="fab fa-twitter"></i>
-        </a>
-        </li>
-        
-        <li class="ml-1 mr-1">
-        <a target="_blank" href="https://facebook.com/sharer.php?u=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220913-csharp-11-static-abstract-members%2f" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
-        <i class="fab fa-facebook-f"></i>
-        </a>
-        </li>
-
-        <li class="ml-1 mr-1">
-            <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220913-csharp-11-static-abstract-members%2f" onclick="window.open(this.href, 'linkedin-share', 'width=550,height=435');return false;">
-            <i class="fab fa-linkedin"></i>
-            </a>
-        </li>
-        
-
-    </ul>
-
-    
-</div>
-</div>  
-                    </div>
-
-                    
-                    <div class="row PageNavigation d-flex justify-content-between font-weight-bold">
-                    
-                        <a class="d-block col-md-6" href="https://henthoven.github.io/codingwithhans.net/blog/20221109-how-sharp-do-you-csharp/"> &laquo; How sharp do you C#? (.NET Assemble! event presentation)</a>
-                    
-                    
-                        <a class="d-block col-md-6 text-lg-right" href="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/">C# 11 - Required members &raquo;</a>
-                    
-                    <div class="clearfix"></div>
-                    </div>
-                    
-                </div>
-                              
-            </div>           
-        </div>
-        
-        
-    </div>
-
-
-            </div>
-<div class="jumbotron fortags">
-	<div class="d-md-flex h-100">
-		
-		<div class="col-md-9 p-5 align-self-center text-center">
-			
-			<a class="mt-1 mb-1" href="/tags/blazor">blazor</a>
-			
-			<a class="mt-1 mb-1" href="/tags/csharp">csharp</a>
-			
-			<a class="mt-1 mb-1" href="/tags/dotnet">dotnet</a>
-			
-			<a class="mt-1 mb-1" href="/tags/dotnetcore">dotnetcore</a>
-			
-			<a class="mt-1 mb-1" href="/tags/gaming">gaming</a>
-			
-		</div>
-	</div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 text-center text-lg-left">
-                &copy; Copyright Hans Enthoven - All rights reserved
-            </div>
-            <div class="col-md-6 col-sm-6 text-center text-lg-right">    
-                
-            </div>
-        </div>
-    </div>
-</footer>
-
-
-        </div>
-
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-<script src="https://henthoven.github.io/codingwithhans.net/js/mediumish.e4b90c58dfa15ac82caf2edfa01e5fd047e17bc15e6babe5c0e442a4407d0b25.js" integrity="sha256-5LkMWN&#43;hWsgsry7foB5f0Efhe8Fea6vlwORCpEB9CyU="></script>
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-1XXXXXXX1-X', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-    </body>
-</html>
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=generator content="Hugo 0.110.0"><title>C# 11 - Static Abstract Members | Coding with Hans</title><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/cover.png"><meta name=twitter:title content="C# 11 - Static Abstract Members"><meta name=twitter:description content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language, and adds some nice features for developers."><meta property="og:title" content="C# 11 - Static Abstract Members"><meta property="og:description" content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language, and adds some nice features for developers."><meta property="og:type" content="article"><meta property="og:url" content="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/"><meta property="og:image" content="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/cover.png"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-09-13T00:00:00+00:00"><meta property="article:modified_time" content="2022-09-13T00:00:00+00:00"><link href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css rel=stylesheet integrity=sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.0.13/css/all.css integrity=sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp crossorigin=anonymous><link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel=stylesheet><link rel=stylesheet href=https://henthoven.github.io/codingwithhans.net/css/medium.5aee7d3a94f3736fcd09e89a822a81da3f807a9fd76f93a89a11a5e448b26e42.css><link rel=stylesheet href=https://henthoven.github.io/codingwithhans.net/css/additional.d7ce26e054a52def87f9b29b7b8eacb2a6e55755720063de89a1a440f0aa22e5.css></head><body><nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down"><div class="container pr-0"><a class=navbar-brand href=https://henthoven.github.io/codingwithhans.net//><span style=font-family:Righteous>Coding with Hans</span><span class=site-extention>.NET</span><div class=page-sub-title>Everyting about software development using .NET and C#!</div></a><button class=navbar-toggler type=button data-toggle=collapse data-target=#navbarMediumish aria-controls=navbarSupportedContent aria-expanded=false aria-label="Toggle navigation">
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse" id=navbarMediumish><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=/codingwithhans.net/>Home</a></li><li class=nav-item><a class=nav-link href=/codingwithhans.net/blog>Blogs</a></li><li class=nav-item><a class=nav-link href=/codingwithhans.net/about>About</a></li></ul></div></div></nav><div class=site-content><div class=container><div class=mainheading><h1 class=sitetitle>Coding with Hans</h1><p class=lead>Everyting about software development using .NET and C#!</p></div><div class=main-content><div class=container><div class=row><div class="col-md-9 flex-first flex-md-unordered"><div class=mainheading><div class="row post-top-meta"><div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0 md-nopad-right"><img class=author-thumb src=/images/hans-thumb-small.jpg alt="Hans Enthoven"></div><div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left md-nopad-left"><a target=_blank class=link-dark>Hans Enthoven</a><br><span class=author-description>Hi, my name is Hans Enthoven. The author of this blog.<br><i class="far fa-star"></i>
+Sep 13, 2022
+<i class="far fa-clock clock"></i>
+8 min read</span></div></div><h1 class=posttitle>C# 11 - Static Abstract Members</h1></div><img class="featured-image img-fluid" src=https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/cover.png alt="thumbnail for this post"><div class=article-post><p>With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language, and adds some nice features for developers. In this article, I will explore one feature in specific: <strong>Static Abstract Members</strong>. I personally feel this is a welcome addition to the language so let’s explain exactly what it is, and why I like it!</p><h2 id=why-add-static-abstract-members>Why add <em>static abstract members</em>?</h2><p>When you have an interface declared on a class it tells you that every instance of that class has the members that are declared in the interface. In that way the compiler knows what members you can use on any of the instances of the given type. Besides the members of the object you can also define static members on a class. Those are the members that will be available on the type and not on the instance of the class. Until now an interface implementation did not have anything to do with those static members. This changes with <em>static abstract members</em>. With this feature it will be possible to define that the type of a class that implements the interface must have certain static members. This can be very useful in the case of operators (operators in C# must be declared static). This is also the main driver for this feature. In .NET 7 <em>Generic Math</em> will be introduced and this is heavily dependent on <em>static abstract members</em>. Let&rsquo;s take a look at an example:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> AddNumbers(IEnumerable&lt;<span style=color:#66d9ef>int</span>&gt; numbersToAdd)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> result = <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>foreach</span>(<span style=color:#66d9ef>var</span> number <span style=color:#66d9ef>in</span> numbersToAdd)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        result += number;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> result;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>AddNumbers(<span style=color:#66d9ef>new</span> <span style=color:#66d9ef>int</span>[] { <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>13</span> });
+</span></span></code></pre></div><p>In the example above you see a method that accepts a list of integers. All the integers in the list will be added and the result will be returned. Now imagine that you also want this method to work with other numeric types like doubles, floats and longs. My first thought would be to make the method generic:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span>T AddNumbersGeneric&lt;T&gt;(IEnumerable&lt;T&gt; numbersToAdd) 
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    T result = <span style=color:#66d9ef>default</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> number <span style=color:#66d9ef>in</span> numbersToAdd)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        result += number;  <span style=color:#75715e>// compiler error CS0019: Operator &#39;+=&#39; cannot be applied to operands of type &#39;T&#39; and &#39;T&#39;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> result;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>Console.WriteLine(AddNumbersGeneric(<span style=color:#66d9ef>new</span> <span style=color:#66d9ef>long</span>[] { <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>13</span> }));
+</span></span></code></pre></div><p>Now the parameter is generic and I initialized the result variable to the default of it&rsquo;s type. The example above however won&rsquo;t compile because the compiler doesn&rsquo;t know if the type T has a + operator implemented. This is now the only thing blocking the generic implementation. So if you want to realize this in the current C# version you have to make an own implementation of AddNumbers for every numeric type. This would add a lot of the same code with only the type being different each time. <em>Generic Math</em> in .NET 7 solves this by relying on <em>static abstract members</em>.</p><h2 id=generic-math-in-net-7-and-the-use-of-static-abstract-members>Generic math in .NET 7 and the use of <em>static abstract members</em></h2><p>In .NET 7 a new interface INumber<t> is added. Let&rsquo;s look at the interface definition:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span> <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>INumber</span>&lt;TSelf&gt; : IComparable, IComparable&lt;TSelf&gt;, 
+</span></span><span style=display:flex><span> IEquatable&lt;TSelf&gt;, IFormattable, IParsable&lt;TSelf&gt;, ISpanFormattable, 
+</span></span><span style=display:flex><span> ISpanParsable&lt;TSelf&gt;, IAdditionOperators&lt;TSelf, TSelf, TSelf&gt;, 
+</span></span><span style=display:flex><span> IAdditiveIdentity&lt;TSelf, TSelf&gt;, IComparisonOperators&lt;TSelf, TSelf&gt;, 
+</span></span><span style=display:flex><span> IEqualityOperators&lt;TSelf, TSelf&gt;, IDecrementOperators&lt;TSelf&gt;, 
+</span></span><span style=display:flex><span> IDivisionOperators&lt;TSelf, TSelf, TSelf&gt;, IIncrementOperators&lt;TSelf&gt;, 
+</span></span><span style=display:flex><span> IModulusOperators&lt;TSelf, TSelf, TSelf&gt;, IMultiplicativeIdentity&lt;TSelf, TSelf&gt;,
+</span></span><span style=display:flex><span> IMultiplyOperators&lt;TSelf, TSelf, TSelf&gt;, INumberBase&lt;TSelf&gt;,
+</span></span><span style=display:flex><span> ISubtractionOperators&lt;TSelf, TSelf, TSelf&gt;, 
+</span></span><span style=display:flex><span> IUnaryNegationOperators&lt;TSelf, TSelf&gt;, IUnaryPlusOperators&lt;TSelf, TSelf&gt; <span style=color:#66d9ef>where</span> TSelf : INumber&lt;TSelf&gt;
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf Abs(TSelf <span style=color:#66d9ef>value</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf Clamp(TSelf <span style=color:#66d9ef>value</span>, TSelf min, TSelf max);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf CopySign(TSelf <span style=color:#66d9ef>value</span>, TSelf sign);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf CreateChecked&lt;TOther&gt;(TOther <span style=color:#66d9ef>value</span>) <span style=color:#66d9ef>where</span> TOther : INumber&lt;TOther&gt;;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf CreateSaturating&lt;TOther&gt;(TOther <span style=color:#66d9ef>value</span>) <span style=color:#66d9ef>where</span> TOther : INumber&lt;TOther&gt;;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf CreateTruncating&lt;TOther&gt;(TOther <span style=color:#66d9ef>value</span>) <span style=color:#66d9ef>where</span> TOther : INumber&lt;TOther&gt;;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>bool</span> IsNegative(TSelf <span style=color:#66d9ef>value</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf Max(TSelf x, TSelf y);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf MaxMagnitude(TSelf x, TSelf y);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf Min(TSelf x, TSelf y);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf MinMagnitude(TSelf x, TSelf y);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf Parse(ReadOnlySpan&lt;<span style=color:#66d9ef>char</span>&gt; s, NumberStyles style, IFormatProvider? provider);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf Parse(<span style=color:#66d9ef>string</span> s, NumberStyles style, IFormatProvider? provider);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>int</span> Sign(TSelf <span style=color:#66d9ef>value</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>bool</span> TryCreate&lt;TOther&gt;(TOther <span style=color:#66d9ef>value</span>, <span style=color:#66d9ef>out</span> TSelf result) <span style=color:#66d9ef>where</span> TOther : INumber&lt;TOther&gt;;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>bool</span> TryParse(ReadOnlySpan&lt;<span style=color:#66d9ef>char</span>&gt; s, NumberStyles style, IFormatProvider? provider, <span style=color:#66d9ef>out</span> TSelf result);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>bool</span> TryParse([NotNullWhen(<span style=color:#66d9ef>true</span>)] <span style=color:#66d9ef>string?</span> s, NumberStyles style, IFormatProvider? provider, <span style=color:#66d9ef>out</span> TSelf result);
+</span></span><span style=display:flex><span>    }
+</span></span></code></pre></div><p>As you can see it has a lot of <em>static abstract members</em> that all the numeric types in .NET implement. Next to that it also inherits from a lot of other new interfaces that all declare <em>static abstract members</em> that are implemented by the different numeric .NET types. Take the <em>IUnaryPlusOperators&lt;TSelf, TSelf></em> interface for example. This interface adds the + operator. It is declared on a separate interface so that you can also reuse that for other types that implement a + operator. The <em>IUnaryPlusOperators&lt;TSelf, TSelf></em> looks like this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>IUnaryPlusOperators</span>&lt;TSelf, TResult&gt; <span style=color:#66d9ef>where</span> TSelf : IUnaryPlusOperators&lt;TSelf, TResult&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TResult <span style=color:#66d9ef>operator</span> +(TSelf <span style=color:#66d9ef>value</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>With all those interfaces added a new and straightforward implementation of our <em>AddNumbers</em> method becomes available:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span>T AddNumbers&lt;T&gt;(IEnumerable&lt;T&gt; numbersToAdd) <span style=color:#66d9ef>where</span> T: INumber&lt;T&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    T result = <span style=color:#66d9ef>default</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> number <span style=color:#66d9ef>in</span> numbersToAdd)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        result += number;  <span style=color:#75715e>// this now compiles because T implements INumber&lt;T&gt;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> result;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>Console.WriteLine(AddNumbers(<span style=color:#66d9ef>new</span> <span style=color:#66d9ef>long</span>[] { <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>13</span> }));
+</span></span><span style=display:flex><span>Console.WriteLine(AddNumbers(<span style=color:#66d9ef>new</span> <span style=color:#66d9ef>double</span>[] { <span style=color:#ae81ff>1.0</span>, <span style=color:#ae81ff>3.0</span>, <span style=color:#ae81ff>13.12</span> }));
+</span></span><span style=display:flex><span>Console.WriteLine(AddNumbers(<span style=color:#66d9ef>new</span> <span style=color:#66d9ef>short</span>[] { <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span> }));
+</span></span></code></pre></div><p>All the method calls to the <em>AddNumbers</em> method will work now. Next to the <em>INumber<t></em> interface a lot of other interfaces using this are added. Another example is <em>IParsable<t></em>. This interface defines 2 methods that a type must have:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>IParsable</span>&lt;TSelf&gt; <span style=color:#66d9ef>where</span> TSelf : IParsable&lt;TSelf&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> TSelf Parse(<span style=color:#66d9ef>string</span> s, IFormatProvider? provider);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>abstract</span> <span style=color:#66d9ef>bool</span> TryParse([NotNullWhen(<span style=color:#66d9ef>true</span>)] <span style=color:#66d9ef>string?</span> s, IFormatProvider? provider, <span style=color:#66d9ef>out</span> TSelf result);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Using the <em>IParsable<t></em> interface makes it possible to have 2 different types handled in the same way as long as they implement the static methods <em>Parse</em> and <em>TryParse</em>.</p><p>The same also works for properties. For example in .NET all numeric types have static properties <em>One</em> an <em>Zero</em>. Those properties can be accessed and used on the type like any normal static member. For example I could change the previous example. In that example we initialized the result to the default of the given type. In the next example the result will be initialized with the <em>Zero</em> property of the generic (<em>INumber&lt;T></em>)type.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span>T AddNumbers&lt;T&gt;(IEnumerable&lt;T&gt; numbersToAdd) <span style=color:#66d9ef>where</span> T: INumber&lt;T&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    T result = T.Zero; <span style=color:#75715e>// initialized with the Zero value of the generic type</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> number <span style=color:#66d9ef>in</span> numbersToAdd)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        result += number; 
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> result;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Just one more example. Next to the <em>INumber&lt;TSelf></em> there is also an interface <em>IMinMaxValue&lt;T></em>. This interface exposes the static members MinValue and MaxValue that almost all numeric types have. It is in a separate interface because not all numeric types implement this (BigInteger for example does not implement this). The following example shows how the MaxValue of different types is written to the console using one generic method.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>void</span> ShowMaxValue&lt;T&gt;() <span style=color:#66d9ef>where</span> T: IMinMaxValue&lt;T&gt;
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    Console.WriteLine(T.MaxValue);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>ShowMaxValue&lt;<span style=color:#66d9ef>int</span>&gt;();
+</span></span><span style=display:flex><span>ShowMaxValue&lt;<span style=color:#66d9ef>long</span>&gt;();
+</span></span><span style=display:flex><span>ShowMaxValue&lt;<span style=color:#66d9ef>decimal</span>&gt;();
+</span></span><span style=display:flex><span>ShowMaxValue&lt;<span style=color:#66d9ef>float</span>&gt;();
+</span></span></code></pre></div><h2 id=why-not-just-static-members>Why not just static members?</h2><p>You could ask why is it needed to make a member <em>static</em> <strong>and</strong> <em>abstract</em>? My first thought was that <em>static</em> would be enough since you want to tell that the member should not be on the object instance of the class but be a static member on the type. The fact that it is not implemented this way is because in <strong>C# 8.0</strong> another feature <em>Static interface members</em> was added to the language. This feature makes it possible to add method static implementations to your interface (not the best addition to the language in my opinion). You can for example define the following interface:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>interface</span> <span style=color:#a6e22e>ICSharp8Example</span>
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> DoSomething();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> DoAnotherThing()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        Console.WriteLine(<span style=color:#e6db74>&#34;Hello from a static method on an interface.&#34;</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>ICSharp8Example.DoAnotherThing();
+</span></span></code></pre></div><p>With this feature static members where already taken on interfaces. That is why this feature uses <em>static abstract</em> to indicate that the member should be implemented on the type.</p><h2 id=how-can-it-be-useful-in-your-own-code--types>How can it be useful in your own code / types?</h2><p>Generic Math is in my opinion a very good use case where <em>static abstract members</em> can be used. This is mainly because operators in C# are always static and because all numeric types share the fact that they have things like a Zero, a One and stuff like calculating an average. Those things are static for a reason. They could have been added as instance properties / methods but that would be a waste of memory resources since stuff like Zero and One are the same for all instances. So this is a perfect example where it is handy that an interface defines that a type should have certain members where the compiler can rely on.</p><p>Having said that I don&rsquo;t have a good example for my own code where I would use this feature now. But when you have a scenario with static members shared across types and you need to handle them in the same way this is a way to make your code cleaner (just like Microsoft did with <em>generic math</em>). If you have a good scenario for this let me know in the comments.</p><h2 id=conclusion>Conclusion</h2><p>Looking at the <em>generic math</em> implementation using <em>static abstract members</em> I think it has already proven to be a very useful language feature. The addition of interfaces like <em>INumber&lt;T></em> (but also stuff like IParsable<t>) are very useful and makes your code cleaner. Next to that you can also benefit from it in your own code when you have a scenario with static members on different types that have the same functional meaning.</p><h4 id=references>References</h4><ul><li><a href=https://devblogs.microsoft.com/dotnet/dotnet-7-generic-math/>.NET blog about generic math</a></li><li><a href=https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/static-abstract-interface-methods>Official Microsoft documentation</a></li></ul></div><div class=after-post-tags><ul class=tags><li><a href=/tags/csharp>csharp</a></li><li><a href=/tags/dotnet>dotnet</a></li></ul></div><div class=row><div class=col-md-12><div class="share sticky-top sticky-top-offset"><p>Share</p><ul><li class="ml-1 mr-1"><a target=_blank href="https://twitter.com/intent/tweet?text=C%23%2011%20-%20Static%20Abstract%20Members&url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220913-csharp-11-static-abstract-members%2f" onclick='return window.open(this.href,"twitter-share","width=550,height=435"),!1'><i class="fab fa-twitter"></i></a></li><li class="ml-1 mr-1"><a target=_blank href="https://facebook.com/sharer.php?u=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220913-csharp-11-static-abstract-members%2f" onclick='return window.open(this.href,"facebook-share","width=550,height=435"),!1'><i class="fab fa-facebook-f"></i></a></li><li class="ml-1 mr-1"><a target=_blank href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220913-csharp-11-static-abstract-members%2f" onclick='return window.open(this.href,"linkedin-share","width=550,height=435"),!1'><i class="fab fa-linkedin"></i></a></li></ul></div></div></div><div class="row PageNavigation d-flex justify-content-between font-weight-bold"><a class="d-block col-md-6" href=https://henthoven.github.io/codingwithhans.net/blog/20221109-how-sharp-do-you-csharp/>&#171; How sharp do you C#? (.NET Assemble! event presentation)</a>
+<a class="d-block col-md-6 text-lg-right" href=https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/>C# 11 - Required members &#187;</a><div class=clearfix></div></div></div></div></div></div></div><div class="jumbotron fortags"><div class="d-md-flex h-100"><div class="col-md-9 p-5 align-self-center text-center"><a class="mt-1 mb-1" href=/tags/blazor>blazor</a>
+<a class="mt-1 mb-1" href=/tags/csharp>csharp</a>
+<a class="mt-1 mb-1" href=/tags/dotnet>dotnet</a>
+<a class="mt-1 mb-1" href=/tags/dotnetcore>dotnetcore</a>
+<a class="mt-1 mb-1" href=/tags/gaming>gaming</a></div></div></div><footer class=footer><div class=container><div class=row><div class="col-md-12 col-sm-12 text-center text-lg-left">&copy; Copyright Hans Enthoven - All rights reserved</div><div class="col-md-6 col-sm-6 text-center text-lg-right"></div></div></div></footer></div><script src=https://code.jquery.com/jquery-3.4.1.min.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js integrity=sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut crossorigin=anonymous></script>
+<script src=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js integrity=sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM crossorigin=anonymous></script>
+<script src=https://henthoven.github.io/codingwithhans.net/js/mediumish.e4b90c58dfa15ac82caf2edfa01e5fd047e17bc15e6babe5c0e442a4407d0b25.js integrity="sha256-5LkMWN+hWsgsry7foB5f0Efhe8Fea6vlwORCpEB9CyU="></script>
+<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-1XXXXXXX1-X","auto"),ga("send","pageview"))</script></body></html>
