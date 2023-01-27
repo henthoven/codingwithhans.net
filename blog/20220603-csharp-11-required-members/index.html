@@ -1,68 +1,342 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=generator content="Hugo 0.110.0"><title>C# 11 - Required members | Coding with Hans</title><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/cover.png"><meta name=twitter:title content="C# 11 - Required members"><meta name=twitter:description content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language and adds some nice features for developers."><meta property="og:title" content="C# 11 - Required members"><meta property="og:description" content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language and adds some nice features for developers."><meta property="og:type" content="article"><meta property="og:url" content="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/"><meta property="og:image" content="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/cover.png"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-06-03T00:00:00+00:00"><meta property="article:modified_time" content="2022-06-03T00:00:00+00:00"><link href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css rel=stylesheet integrity=sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T crossorigin=anonymous><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.0.13/css/all.css integrity=sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp crossorigin=anonymous><link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel=stylesheet><link rel=stylesheet href=https://henthoven.github.io/codingwithhans.net/css/medium.5aee7d3a94f3736fcd09e89a822a81da3f807a9fd76f93a89a11a5e448b26e42.css integrity="sha256-Wu59OpTzc2/NCeiagiqB2j+Aep/Xb5OomhGl5EiybkI="><link rel=stylesheet href=https://henthoven.github.io/codingwithhans.net/css/additional.d7ce26e054a52def87f9b29b7b8eacb2a6e55755720063de89a1a440f0aa22e5.css integrity="sha256-184m4FSlLe+H+bKbe46ssqblV1VyAGPeiaGkQPCqIuU="></head><body><nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down"><div class="container pr-0"><a class=navbar-brand href=https://henthoven.github.io/codingwithhans.net//><span style=font-family:Righteous>Coding with Hans</span><span class=site-extention>.NET</span><div class=page-sub-title>Everyting about software development using .NET and C#!</div></a><button class=navbar-toggler type=button data-toggle=collapse data-target=#navbarMediumish aria-controls=navbarSupportedContent aria-expanded=false aria-label="Toggle navigation">
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse" id=navbarMediumish><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=/codingwithhans.net/>Home</a></li><li class=nav-item><a class=nav-link href=/codingwithhans.net/blog>Blogs</a></li><li class=nav-item><a class=nav-link href=/codingwithhans.net/about>About</a></li></ul></div></div></nav><div class=site-content><div class=container><div class=mainheading><h1 class=sitetitle>Coding with Hans</h1><p class=lead>Everyting about software development using .NET and C#!</p></div><div class=main-content><div class=container><div class=row><div class="col-md-9 flex-first flex-md-unordered"><div class=mainheading><div class="row post-top-meta"><div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0 md-nopad-right"><img class=author-thumb src=/images/hans-thumb-small.jpg alt="Hans Enthoven"></div><div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left md-nopad-left"><a target=_blank class=link-dark>Hans Enthoven</a><br><span class=author-description>Hi, my name is Hans Enthoven. The author of this blog.<br><i class="far fa-star"></i>
-Jun 3, 2022
-<i class="far fa-clock clock"></i>
-6 min read</span></div></div><h1 class=posttitle>C# 11 - Required members</h1></div><img class="featured-image img-fluid" src=https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/cover.png alt="thumbnail for this post"><div class=article-post><p>With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language and adds some nice features for developers. In this article I would like to talk about one feature that will <em><strong>almost certain</strong></em> be part of C# 11: <b>required members</b> (Mads Torgersen also talked about this feature during the Microsoft build a few weeks ago. See <a href="https://www.youtube.com/watch?v=ChAu226eUNo">this video</a>). I think it is a very nice and welcome addition to the language. Let’s find out what it is and why I think it is a good addition.</p><h2 id=why-add-required-members-and-what-problem-do-they-solve>Why add <em>required members</em> and what problem do they solve?</h2><p>Properties have always been part of the C# language. In the first version (released in 2002) you had to write a lot of boiler plate code because you had to implement the getter and the setter of the property and most of the time also define a private field (backing field) that you used to store the value of the property. Back in that day a class with a single public property looked like this.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span>
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> _lastName;
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>get</span> { <span style=color:#66d9ef>return</span> _lastName; }
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>set</span> { _lastName = <span style=color:#66d9ef>value</span>; }
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>Then with the release of C# 3.0 in 2007 a major feature <em>auto-implemented-properties</em> was added to the language. This meant that you did not have to specify your own backing field for the property and also the getter and setter where automatically implemented. A property on a class since then can look as the following.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span>
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>In C# 3.0 another feature <em>Object-initializers</em> was added. This feature made it possible to set properties of an object upon creation. This made the following code possible.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span>Person person = <span style=color:#66d9ef>new</span> Person 
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    LastName = <span style=color:#e6db74>&#34;Enthoven&#34;</span>
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>When developing code and making a clean object model it is always a good practice to make sure an object can only exists when it has it&rsquo;s properties correctly filled. To accomplish this you most of the time add properties or other dependencies that are required to the constructor parameters. In that way an object can only be created when you pass in the required values. This could for example look as the following.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span>
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> Person(<span style=color:#66d9ef>string</span> firstName, <span style=color:#66d9ef>string</span> lastName)
-</span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#75715e>// check if parameters are correct and throw an exception when this is not the case</span>
-</span></span><span style=display:flex><span>        
-</span></span><span style=display:flex><span>        FirstName = firstName;
-</span></span><span style=display:flex><span>        LastName = lastName;
-</span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> FirstName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>set</span>; }
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>set</span>; }
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>The example above is very simple and has just a few parameters. But in case your class becomes larger the number of parameters to your constructor can increase. In that way it can occur that your code becomes less maintainable and readable. This will even be more the case when you have properties in a base class. In that case all the classes that inherit the base class have to pass all those arguments to the base constructor. For example:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>SpecificPerson</span> : Person
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> SpecificPerson(<span style=color:#66d9ef>string</span> firstName, <span style=color:#66d9ef>string</span> lastName) : <span style=color:#66d9ef>base</span> (firstName, lastName) {}
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>Because of the features described before (<em>auto-generated-properties</em> and <em>object-initializer</em>) a lot of people (including myself sometimes) stopped using constructor parameters for some fields and initialized them using the <em>object-initializer</em>. But by doing this there are 2 major side effects:</p><ol><li>The properties are <strong>mutable</strong>. This means a property can be set upon creation of the object but <em>also</em> be changed after the object is created.</li><li>It is <strong>not required</strong> that you set a property. This means you can create the object <em>without</em> setting a value. This can lead to objects that are not always correctly filled.</li></ol><p>For the first side effect there was a new feature added with C# 9.0. In that release <em>init-only</em> setters where added. Those where added so that a property can only be set while creating the object. In that way a property becomes <strong>immutable</strong> because it&rsquo;s value can not be changed after the object is created. An init only property looks as follows.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span>
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>init</span>; }
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>Person person = <span style=color:#66d9ef>new</span> Person();
-</span></span><span style=display:flex><span>person.LastName = <span style=color:#e6db74>&#34;Enthoven&#34;</span>;  <span style=color:#75715e>// this will not compile!</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>Person person = <span style=color:#66d9ef>new</span> Person { LastName = <span style=color:#e6db74>&#34;Enthoven&#34;</span> } <span style=color:#75715e>// this will compile</span>
-</span></span></code></pre></div><p>The second side effect however is not solved with the <em>init-only-property</em> feature. It is still possible to create an object <em>without</em> setting the values of all properties. This is where the new feature <em>required members</em> comes in place.</p><h2 id=how-is-this-solved-with-required-members>How is this solved with <em>required members</em>?</h2><p>The <em>required members</em> feature adds a new modifier <em>required</em> to the language that can be used in front of a property. It will look as the following.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span>
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> required <span style=color:#66d9ef>string</span> FirstName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>In the example above the FirstName property is marked as required. This means that when you create an instance of Person you have to set the FirstName property using the <em>object-initializer</em>. In that way the second side effect described above is solved. Just by adding the required modifier it is forced that the property is always set. For example:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Person</span>
-</span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> required <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>init</span>; }
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>Person person = <span style=color:#66d9ef>new</span> Person(); <span style=color:#75715e>// this will not compile because LastName is required</span>
-</span></span><span style=display:flex><span>Person person = <span style=color:#66d9ef>new</span> Person { LastName = <span style=color:#e6db74>&#34;Enthoven&#34;</span> } <span style=color:#75715e>// this will compile</span>
-</span></span></code></pre></div><h2 id=conclusion>Conclusion</h2><p>I think this feature is a great addition to the language because it removes a lot of unnecessary code (especially when you have a lot of required members that also need to be passed in to a base class) and replaces it with this simple keyword. Using this keyword makes it easier to make your object model more valid without the need to create a constructor that takes a lot of arguments. I hope that this feature really makes it to the final release of C# 11 so we can start using it next November.</p><p><strong>Tip</strong>: Check out <a href=https://sharplab.io/>SharpLab</a> and select the <strong>required members</strong> branch to play around with this new feature. You can then also see what low-level C# code is generated to implement this functionality (using attributes).</p><h4 id=references>References</h4><ul><li><a href=https://github.com/dotnet/csharplang/blob/main/proposals/required-members.md>GitHub csharplang required-members proposal</a></li><li><a href="https://www.youtube.com/watch?v=ChAu226eUNo">Microsoft build presentation by Mads Torgersen</a></li><li><a href="https://www.youtube.com/watch?v=9CDgPgWF9IY">Very good explanation of required members by Nick Chapsas</a></li></ul></div><div class=after-post-tags><ul class=tags><li><a href=/tags/csharp>csharp</a></li><li><a href=/tags/dotnet>dotnet</a></li></ul></div><div class=row><div class=col-md-12><div class="share sticky-top sticky-top-offset"><p>Share</p><ul><li class="ml-1 mr-1"><a target=_blank href="https://twitter.com/intent/tweet?text=C%23%2011%20-%20Required%20members&url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220603-csharp-11-required-members%2f" onclick='return window.open(this.href,"twitter-share","width=550,height=435"),!1'><i class="fab fa-twitter"></i></a></li><li class="ml-1 mr-1"><a target=_blank href="https://facebook.com/sharer.php?u=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220603-csharp-11-required-members%2f" onclick='return window.open(this.href,"facebook-share","width=550,height=435"),!1'><i class="fab fa-facebook-f"></i></a></li><li class="ml-1 mr-1"><a target=_blank href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220603-csharp-11-required-members%2f" onclick='return window.open(this.href,"linkedin-share","width=550,height=435"),!1'><i class="fab fa-linkedin"></i></a></li></ul></div></div></div><div class="row PageNavigation d-flex justify-content-between font-weight-bold"><a class="d-block col-md-6" href=https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/>&#171; C# 11 - Static Abstract Members</a>
-<a class="d-block col-md-6 text-lg-right" href=https://henthoven.github.io/codingwithhans.net/blog/20220517-csharp-11-raw-string-literals/>C# 11 - Raw string literals &#187;</a><div class=clearfix></div></div></div></div></div></div></div><div class="jumbotron fortags"><div class="d-md-flex h-100"><div class="col-md-9 p-5 align-self-center text-center"><a class="mt-1 mb-1" href=/tags/blazor>blazor</a>
-<a class="mt-1 mb-1" href=/tags/csharp>csharp</a>
-<a class="mt-1 mb-1" href=/tags/dotnet>dotnet</a>
-<a class="mt-1 mb-1" href=/tags/dotnetcore>dotnetcore</a>
-<a class="mt-1 mb-1" href=/tags/gaming>gaming</a></div></div></div><footer class=footer><div class=container><div class=row><div class="col-md-12 col-sm-12 text-center text-lg-left">&copy; Copyright Hans Enthoven - All rights reserved</div><div class="col-md-6 col-sm-6 text-center text-lg-right"></div></div></div></footer></div><script src=https://code.jquery.com/jquery-3.4.1.min.js></script>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js integrity=sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut crossorigin=anonymous></script>
-<script src=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js integrity=sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM crossorigin=anonymous></script>
-<script src=https://henthoven.github.io/codingwithhans.net/js/mediumish.e4b90c58dfa15ac82caf2edfa01e5fd047e17bc15e6babe5c0e442a4407d0b25.js integrity="sha256-5LkMWN+hWsgsry7foB5f0Efhe8Fea6vlwORCpEB9CyU="></script>
-<script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-1XXXXXXX1-X","auto"),ga("send","pageview"))</script></body></html>
+<!DOCTYPE html>
+<html lang="en-us"><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="Hugo 0.110.0">
+	
+	<title>C# 11 - Required members | Coding with Hans</title>
+	
+	
+
+	<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/cover.png"/>
+<meta name="twitter:title" content="C# 11 - Required members"/>
+<meta name="twitter:description" content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language and adds some nice features for developers."/>
+
+	<meta property="og:title" content="C# 11 - Required members" />
+<meta property="og:description" content="With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language and adds some nice features for developers." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/" /><meta property="og:image" content="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/cover.png"/><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2022-06-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-06-03T00:00:00+00:00" />
+
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Righteous%7CMerriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+
+	
+	<link rel="stylesheet" href="https://henthoven.github.io/codingwithhans.net/css/medium.5aee7d3a94f3736fcd09e89a822a81da3f807a9fd76f93a89a11a5e448b26e42.css" integrity="sha256-Wu59OpTzc2/NCeiagiqB2j&#43;Aep/Xb5OomhGl5EiybkI=">
+
+	
+	<link rel="stylesheet" href="https://henthoven.github.io/codingwithhans.net/css/additional.d7ce26e054a52def87f9b29b7b8eacb2a6e55755720063de89a1a440f0aa22e5.css" integrity="sha256-184m4FSlLe&#43;H&#43;bKbe46ssqblV1VyAGPeiaGkQPCqIuU=">
+
+	
+	
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
+    <div class="container pr-0">
+        
+        <a class="navbar-brand" href="https://henthoven.github.io/codingwithhans.net//">
+
+            
+            <span style="font-family:Righteous;">Coding with Hans</span><span class="site-extention">.NET</span>
+            <div class="page-sub-title">Everyting about software development using .NET and C#!</div>
+            
+        </a>
+        
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        
+        <div class="collapse navbar-collapse" id="navbarMediumish">
+            
+            <ul class="navbar-nav ml-auto">
+                 
+                    
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/codingwithhans.net/">Home</a>
+                    </li>
+                    
+                 
+                    
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/codingwithhans.net/blog">Blogs</a>
+                    </li>
+                    
+                 
+                    
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/codingwithhans.net/about">About</a>
+                    </li>
+                    
+                
+            </ul>
+        </div>
+        
+    </div>
+</nav>
+
+
+        <div class="site-content">   
+            <div class="container">
+<div class="mainheading">
+    <h1 class="sitetitle">Coding with Hans</h1>
+    <p class="lead">
+         Everyting about software development using .NET and C#!
+    </p>
+</div><div class="main-content">
+        
+        <div class="container">
+            <div class="row">
+                                
+                <div class="col-md-9 flex-first flex-md-unordered">
+                    <div class="mainheading">
+                        	
+                        
+                        
+                        
+                        <div class="row post-top-meta">
+                            <div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0 md-nopad-right">
+                                <img class="author-thumb" src="/images/hans-thumb-small.jpg" alt="Hans Enthoven">
+                            </div>
+                            <div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left md-nopad-left">
+                                <a target="_blank" class="link-dark">Hans Enthoven</a><br>
+                                <span class="author-description">
+                                    Hi, my name is Hans Enthoven. The author of this blog.<br>
+                                    <i class="far fa-star"></i>
+                                    Jun 3, 2022
+                                    <i class="far fa-clock clock"></i>
+                                    6 min read
+                                </span>					
+                            </div>
+                        </div>			
+                        	
+                        
+                                                
+                        
+                        <h1 class="posttitle">C# 11 - Required members</h1> 
+                    </div>
+
+                    
+                    
+                    
+                        <img class="featured-image img-fluid" src="https://henthoven.github.io/codingwithhans.net/blog/20220603-csharp-11-required-members/cover.png" alt="thumbnail for this post">
+                    
+                    
+
+                    
+                    <div class="article-post">
+                        <p>With the release of .NET 7 next November, a new language version of C# will also be released. This will be the 11th version of the C# language and adds some nice features for developers. In this article I would like to talk about one feature that will <em><strong>almost certain</strong></em> be part of C# 11: <b>required members</b> (Mads Torgersen also talked about this feature during the Microsoft build a few weeks ago. See <a href="https://www.youtube.com/watch?v=ChAu226eUNo">this video</a>). I think it is a very nice and welcome addition to the language. Let’s find out what it is and why I think it is a good addition.</p>
+<h2 id="why-add-required-members-and-what-problem-do-they-solve">Why add <em>required members</em> and what problem do they solve?</h2>
+<p>Properties have always been part of the C# language. In the first version (released in 2002) you had to write a lot of boiler plate code because you had to implement the getter and the setter of the property and most of the time also define a private field (backing field) that you used to store the value of the property. Back in that day a class with a single public property looked like this.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> _lastName;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> LastName
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> _lastName; }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">set</span> { _lastName = <span style="color:#66d9ef">value</span>; }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Then with the release of C# 3.0 in 2007 a major feature <em>auto-implemented-properties</em> was added to the language. This meant that you did not have to specify your own backing field for the property and also the getter and setter where automatically implemented. A property on a class since then can look as the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> LastName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In C# 3.0 another feature <em>Object-initializers</em> was added. This feature made it possible to set properties of an object upon creation. This made the following code possible.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span>Person person = <span style="color:#66d9ef">new</span> Person 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    LastName = <span style="color:#e6db74">&#34;Enthoven&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When developing code and making a clean object model it is always a good practice to make sure an object can only exists when it has it&rsquo;s properties correctly filled. To accomplish this you most of the time add properties or other dependencies that are required to the constructor parameters. In that way an object can only be created when you pass in the required values. This could for example look as the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Person(<span style="color:#66d9ef">string</span> firstName, <span style="color:#66d9ef">string</span> lastName)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// check if parameters are correct and throw an exception when this is not the case</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        FirstName = firstName;
+</span></span><span style="display:flex;"><span>        LastName = lastName;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> FirstName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> LastName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The example above is very simple and has just a few parameters. But in case your class becomes larger the number of parameters to your constructor can increase. In that way it can occur that your code becomes less maintainable and readable. This will even be more the case when you have properties in a base class. In that case all the classes that inherit the base class have to pass all those arguments to the base constructor. For example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpecificPerson</span> : Person
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> SpecificPerson(<span style="color:#66d9ef">string</span> firstName, <span style="color:#66d9ef">string</span> lastName) : <span style="color:#66d9ef">base</span> (firstName, lastName) {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Because of the features described before (<em>auto-generated-properties</em> and <em>object-initializer</em>) a lot of people (including myself sometimes) stopped using constructor parameters for some fields and initialized them using the <em>object-initializer</em>. But by doing this there are 2 major side effects:</p>
+<ol>
+<li>The properties are <strong>mutable</strong>. This means a property can be set upon creation of the object but <em>also</em> be changed after the object is created.</li>
+<li>It is <strong>not required</strong> that you set a property. This means you can create the object <em>without</em> setting a value. This can lead to objects that are not always correctly filled.</li>
+</ol>
+<p>For the first side effect there was a new feature added with C# 9.0. In that release <em>init-only</em> setters where added. Those where added so that a property can only be set while creating the object. In that way a property becomes <strong>immutable</strong> because it&rsquo;s value can not be changed after the object is created. An init only property looks as follows.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> LastName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Person person = <span style="color:#66d9ef">new</span> Person();
+</span></span><span style="display:flex;"><span>person.LastName = <span style="color:#e6db74">&#34;Enthoven&#34;</span>;  <span style="color:#75715e">// this will not compile!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Person person = <span style="color:#66d9ef">new</span> Person { LastName = <span style="color:#e6db74">&#34;Enthoven&#34;</span> } <span style="color:#75715e">// this will compile</span>
+</span></span></code></pre></div><p>The second side effect however is not solved with the <em>init-only-property</em> feature. It is still possible to create an object <em>without</em> setting the values of all properties. This is where the new feature <em>required members</em> comes in place.</p>
+<h2 id="how-is-this-solved-with-required-members">How is this solved with <em>required members</em>?</h2>
+<p>The <em>required members</em> feature adds a new modifier <em>required</em> to the language that can be used in front of a property. It will look as the following.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> required <span style="color:#66d9ef">string</span> FirstName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In the example above the FirstName property is marked as required. This means that when you create an instance of Person you have to set the FirstName property using the <em>object-initializer</em>. In that way the second side effect described above is solved. Just by adding the required modifier it is forced that the property is always set. For example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C#" data-lang="C#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> required <span style="color:#66d9ef">string</span> LastName { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">init</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Person person = <span style="color:#66d9ef">new</span> Person(); <span style="color:#75715e">// this will not compile because LastName is required</span>
+</span></span><span style="display:flex;"><span>Person person = <span style="color:#66d9ef">new</span> Person { LastName = <span style="color:#e6db74">&#34;Enthoven&#34;</span> } <span style="color:#75715e">// this will compile</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>I think this feature is a great addition to the language because it removes a lot of unnecessary code (especially when you have a lot of required members that also need to be passed in to a base class) and replaces it with this simple keyword. Using this keyword makes it easier to make your object model more valid without the need to create a constructor that takes a lot of arguments. I hope that this feature really makes it to the final release of C# 11 so we can start using it next November.</p>
+<p><strong>Tip</strong>: Check out <a href="https://sharplab.io/">SharpLab</a> and select the <strong>required members</strong> branch to play around with this new feature. You can then also see what low-level C# code is generated to implement this functionality (using attributes).</p>
+<h4 id="references">References</h4>
+<ul>
+<li><a href="https://github.com/dotnet/csharplang/blob/main/proposals/required-members.md">GitHub csharplang required-members proposal</a></li>
+<li><a href="https://www.youtube.com/watch?v=ChAu226eUNo">Microsoft build presentation by Mads Torgersen</a></li>
+<li><a href="https://www.youtube.com/watch?v=9CDgPgWF9IY">Very good explanation of required members by Nick Chapsas</a></li>
+</ul>
+
+                    </div>
+                    
+                    
+                    <div class="after-post-tags">
+                        <ul class="tags">
+                        
+                        <li>
+                        <a href="/tags/csharp">csharp</a>
+                        </li>
+                        
+                        <li>
+                        <a href="/tags/dotnet">dotnet</a>
+                        </li>
+                        
+                        </ul>
+                    </div>
+                    
+                    
+                    <div class="row">
+                        
+                        <div class="col-md-12"><div class="share sticky-top sticky-top-offset">
+    <p>Share</p>
+    <ul>
+        <li class="ml-1 mr-1">
+        <a target="_blank" href="https://twitter.com/intent/tweet?text=C%23%2011%20-%20Required%20members&url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220603-csharp-11-required-members%2f" onclick="window.open(this.href, 'twitter-share', 'width=550,height=435');return false;">
+        <i class="fab fa-twitter"></i>
+        </a>
+        </li>
+        
+        <li class="ml-1 mr-1">
+        <a target="_blank" href="https://facebook.com/sharer.php?u=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220603-csharp-11-required-members%2f" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+        <i class="fab fa-facebook-f"></i>
+        </a>
+        </li>
+
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3a%2f%2fhenthoven.github.io%2fcodingwithhans.net%2fblog%2f20220603-csharp-11-required-members%2f" onclick="window.open(this.href, 'linkedin-share', 'width=550,height=435');return false;">
+            <i class="fab fa-linkedin"></i>
+            </a>
+        </li>
+        
+
+    </ul>
+
+    
+</div>
+</div>  
+                    </div>
+
+                    
+                    <div class="row PageNavigation d-flex justify-content-between font-weight-bold">
+                    
+                        <a class="d-block col-md-6" href="https://henthoven.github.io/codingwithhans.net/blog/20220913-csharp-11-static-abstract-members/"> &laquo; C# 11 - Static Abstract Members</a>
+                    
+                    
+                        <a class="d-block col-md-6 text-lg-right" href="https://henthoven.github.io/codingwithhans.net/blog/20220517-csharp-11-raw-string-literals/">C# 11 - Raw string literals &raquo;</a>
+                    
+                    <div class="clearfix"></div>
+                    </div>
+                    
+                </div>
+                              
+            </div>           
+        </div>
+        
+        
+    </div>
+
+
+            </div>
+<div class="jumbotron fortags">
+	<div class="d-md-flex h-100">
+		
+		<div class="col-md-9 p-5 align-self-center text-center">
+			
+			<a class="mt-1 mb-1" href="/tags/blazor">blazor</a>
+			
+			<a class="mt-1 mb-1" href="/tags/csharp">csharp</a>
+			
+			<a class="mt-1 mb-1" href="/tags/dotnet">dotnet</a>
+			
+			<a class="mt-1 mb-1" href="/tags/dotnetcore">dotnetcore</a>
+			
+			<a class="mt-1 mb-1" href="/tags/gaming">gaming</a>
+			
+		</div>
+	</div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 text-center text-lg-left">
+                &copy; Copyright Hans Enthoven - All rights reserved
+            </div>
+            <div class="col-md-6 col-sm-6 text-center text-lg-right">    
+                
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+        </div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<script src="https://henthoven.github.io/codingwithhans.net/js/mediumish.e4b90c58dfa15ac82caf2edfa01e5fd047e17bc15e6babe5c0e442a4407d0b25.js" integrity="sha256-5LkMWN&#43;hWsgsry7foB5f0Efhe8Fea6vlwORCpEB9CyU="></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-1XXXXXXX1-X', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    </body>
+</html>
